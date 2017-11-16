@@ -23,7 +23,7 @@
         <form action="LoginServlet" method="POST">
           
           <div class="input-container">
-            <input type="text" id="username" name="username" required="required" />
+            <input type="text" id="username" name="username" required="required" autocomplete="false" />
             <label for="username">Username</label>
             <div class="bar"></div>
           </div>
@@ -54,7 +54,7 @@
         <form action="RegisterServlet" method="POST">
     
           <div class="input-container">
-            <input type="text" id="username" name="username" required="required" />
+            <input type="text" id="username" name="username" required="required" autocomplete="false" />
             <label for="username">Username</label>
             <div class="bar"></div>
           </div>
@@ -66,7 +66,7 @@
           </div>
     
           <div class="input-container">    
-            <input type="text" id="team" name="team" required="required" />    
+            <input type="text" id="team" name="team" required="required" autocomplete="false" />    
             <label for="team">Team Name</label>    
             <div class="bar"></div>    
           </div>

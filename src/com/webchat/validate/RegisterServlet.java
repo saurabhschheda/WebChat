@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.webchat.validate;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,79 +13,66 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RegisterServlet extends HttpServlet {
+public class RegisterServlet extends HttpServlet implements DBConnection {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    String username, password;
+    Connection con;
+
+    private boolean isUsernameValid() throws SQLException {
+        boolean usernameValid = true;
+        String query = "SELECT * FROM User WHERE username = '" + username + "';";
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        if (rs.first()) usernameValid = false;
+        ps.close();
+        return usernameValid;
+    }
+
+    private int getOrgID(String teamName) throws SQLException, ValidationException {
+        String query = "SELECT ID FROM Organization WHERE Name = '" + teamName + "';";
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        int orgID = -1;
+        if (rs.first()) orgID = rs.getInt(1);
+        else throw new ValidationException("Invalid Organization");
+        ps.close();
+        return orgID;
+    }
+
+    private void addUser(String teamName) throws SQLException, ValidationException {
+        if (!isUsernameValid()) throw new ValidationException("Username Already Taken");
+        int orgID = getOrgID(teamName);
+        String query = "INSERT INTO User VALUES ('" + username + "', '" + password + "', '" + orgID + "');";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.executeUpdate();
+        ps.close();
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String username = request.getParameter("username");
-        String pass = request.getParameter("password");
+            throws ServletException, IOException, ValidationException {
+        username = request.getParameter("username");
+        password = request.getParameter("password");
         String teamName = request.getParameter("team");
-
-        // inserting data into mysql database
         try {
             Class.forName("com.mysql.jdbc.Driver"); // loads mysql driver
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", "root", "QutabMinar5");
-
-            String query = "SELECT ID FROM Organization WHERE Name = '" + teamName + "';";
-            PreparedStatement ps = con.prepareStatement(query); // generates sql query
-            ResultSet rs = ps.executeQuery(); // execute it on test database
-            int orgID = 0;
-            while (rs.next()) {
-                orgID = rs.getInt(1);
-            }
-            ps.close();
-
-            query = "INSERT INTO User VALUES ('" + username + "', '" + pass + "', '" + orgID + "');";
-            ps = con.prepareStatement(query); // generates sql query
-            ps.executeUpdate(); // execute it on test database
-            ps.close();
-            
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
+            addUser(teamName);
             con.close();
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            RequestDispatcher rd = request.getRequestDispatcher("fail.html");
-            rd.forward(request,response);
+            throw new ValidationException();
         }
-        out.println("Successfully Registered");
     }
 
-    /**
-     * Handles the HTTP GET method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP POST method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ValidationException e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("fail.jsp").forward(request, response);
+        }
     }
 
 }

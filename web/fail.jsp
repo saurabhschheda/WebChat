@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>WebChat</title>
@@ -12,10 +7,23 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link href="./css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="./css/style.css" rel="stylesheet">
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     </head>
     <body>
+      <div class="pen-title">
+        <h1>Error</h1>
+      </div>
+      <div class="container">
         <div class="card"></div>
-        <div class="card"><h1 class="title">Username already taken :(</h1></div>
+        <div class="card">
+          <h1 class="title"><%=(String)request.getAttribute("error")%> :(</h1>
+          <div class="button-container">
+            <a href="index.jsp">
+              <button>
+                <span>Return to Login Page</span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
     </body>
 </html>
