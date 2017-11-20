@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet implements DBConnection {
        	if (rs.first())
          	isOK = true;
        	ps.close();
-       	return usernameValid;
+       	return isOK;
    	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
