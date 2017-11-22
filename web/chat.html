@@ -34,13 +34,13 @@
                     </li>
                 </ul>
                 <ul class="list-bottom">
-                    <li class="clearfix" id="addTeam">
+                    <li class="clearfix" id="addTeam" onclick="addTeam()">
                         <div class="about">
                             <div class="name">
                                 <i class="fa fa-plus"></i> Add Team</div>
                         </div>
                     </li>
-                    <li class="clearfix" id="logout">
+                    <li class="clearfix" id="logout" onclick="disconnect()">
                         <div class="about">
                             <div class="name">
                                 <i class="fa fa-power-off"></i> Logout</div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="chat-message clearfix">
                     <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="1"></textarea>
-                    <button>Send</button>
+                    <button id="send" onclick="sendMessage">Send</button>
                 </div>
             </div>
         </div>
