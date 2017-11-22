@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebChat</title>
+        <link rel="stylesheet" type="text/css" href="css/chat.css">
+        <link href="./css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>   
+    <body>
+        <div class="container clearfix">  
+            <div class="people-list" id="people-list">
+                <div class="search">Username</div>
+                <ul class="list">
+                    <li class="clearfix active">
+                        <div class="about">
+                            <div class="name">Team 1</div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="about">
+                            <div class="name">Team 1</div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="about">
+                            <div class="name">Team 1</div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="about">
+                            <div class="name">Team 1</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list-bottom">
+                    <li class="clearfix" id="addTeam">
+                        <div class="about">
+                            <div class="name">
+                                <i class="fa fa-plus"></i> Add Team</div>
+                        </div>
+                    </li>
+                    <li class="clearfix" id="logout">
+                        <div class="about">
+                            <div class="name">
+                                <i class="fa fa-power-off"></i> Logout</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat">                
+                <div class="chat-history">
+                    <ul>
+                        <li class="clearfix">
+                            <div class="message-data align-right">
+                                <span class="message-data-name">Sender</span>
+                            </div>
+                            <div class="message other-message float-right">
+                                Message
+                            </div>
+                        </li>
+                        <li>
+                            <div class="message-data">
+                                <span class="message-data-name">Sender</span>
+                            </div>
+                            <div class="message my-message">
+                                Message
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat-message clearfix">
+                    <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="1"></textarea>
+                    <button>Send</button>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/chat.js"></script>
+    </body>
+</html>

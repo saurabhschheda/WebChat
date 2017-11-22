@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
 			if (!User.authenticate(username, password)) {
 				throw new ValidationException("Username and Password Do Not Match");
 			}
-			request.getRequestDispatcher("chat.jsp").forward(request, response);
+			request.getRequestDispatcher("chat.html").forward(request, response);
 		} catch (ClassNotFoundException | SQLException e) {
 			throw new ValidationException();
 		}

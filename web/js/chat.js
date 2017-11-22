@@ -1,7 +1,5 @@
-//DOM Element
-var usernameInputEl = document.querySelector("#username");
-var connectBtnEl = document.querySelector('#connect');
-var disconnectBtnEl = document.querySelector('#disconnect');
+// DOM Elements
+var disconnectBtnEl = document.getElementById('logout');
 var usernameListEl = document.querySelector("#userList");
 var articleEl = document.querySelector('article');
 var messageBoardEl = articleEl.querySelector('#message-board');
