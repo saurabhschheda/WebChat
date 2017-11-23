@@ -16,8 +16,7 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String teamName = request.getParameter("team");
         try {
-            User newUser = new User(username);
-            newUser.setOrgName(teamName);
+            User newUser = new User(username, teamName);
             if (!newUser.isUsernameValid()) {
                 throw new ValidationException("Username already Exists");
             }

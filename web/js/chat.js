@@ -90,13 +90,14 @@ function newRoom(id, name) {
     // Add DOM Element to chatlist
 }
 
-function getMessage(sender, message, to) {
+function getMessage(data) {
     // Update chat
     // Rerender chatTo's chat history
+    console.log(data);
 }
 
 function sendMessage() {
-    console.log("sending message ...")
+    console.log("sending message ...");
     var chatHistoryEl = document.querySelector('.chat-history');
     var messageInputEl = document.getElementById('toSend');
     var message = messageInputEl.value;

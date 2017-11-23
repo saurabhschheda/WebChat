@@ -12,10 +12,28 @@ public class User extends Organization implements DBConnection {
 	private String username;
 	ArrayList<Team> teams;
 
+	public String getUsername() { return username; };
+
 	public User(String username) throws SQLException, ClassNotFoundException {
 		super();
 		this.username = username;
-		setTeams();
+		setOrgID(getOrg());
+	}
+
+	private int getOrg() throws SQLException {
+		String query = "SELECT Org_ID FROM User WHERE Username = '" + username + "';";
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		rs.first();
+		int id = rs.getInt(1);
+		rs.close();
+		ps.close();
+		return id;
+	}
+
+	public User(String username, String orgName) throws SQLException, ClassNotFoundException {
+		super(orgName);
+		this.username = username;
 	}
 
 	private void setTeams() throws SQLException, ClassNotFoundException {
@@ -32,9 +50,7 @@ public class User extends Organization implements DBConnection {
 	}
 
 	public ArrayList<Team> getTeams() throws SQLException, ClassNotFoundException {
-		if (teams == null) {
-			setTeams();
-		} 
+		setTeams(); 
 		return teams;
 	}
 

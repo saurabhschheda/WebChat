@@ -18,11 +18,11 @@ import com.webchat.model.Message;
 @ServerEndpoint("/chat")
 public class Server {
 
-	private static Map<User, Session> clients = Collections.synchronizedMap(new LinkedHashMap<User, Session>());
+	private static Map<String, Session> clients = Collections.synchronizedMap(new LinkedHashMap<String, Session>());
 
 	private synchronized void initUser(String username, Session s) throws Exception {
 		User user = new User(username);
-		clients.put(user, s);
+		clients.put(username, s);
 		ArrayList<Team> rooms = user.getTeams();
 		String msg = "init";
 		for (Team room : rooms) {
@@ -32,7 +32,13 @@ public class Server {
 	}
 
 	private synchronized void sendMessage(String msg, Session s) throws Exception {
-		// Send Message to those sessions that contain the destined Room
+		Message message = new Message(msg);
+		ArrayList<User> receivers = message.getDestination().getUsers();
+		for (User receiver : receivers) {
+			if (clients.containsKey(receiver.getUsername())) {
+				clients.get(receiver.getUsername()).getBasicRemote().sendText("message|" + msg);
+			}
+		}
 	}
 
 	@OnMessage
@@ -51,12 +57,13 @@ public class Server {
 					System.out.println(msg);
 			}
 		} catch (Exception e) {
+			// e.printStackTrace();
 			s.close(new CloseReason(CloseReason.CloseCodes.UNEXPECTED_CONDITION, e.toString()));
 		}
 	}
 
 	@OnClose
-	public synchronized void onClose(Session s, CloseReason reason) {
+	public synchronized void onClose(CloseReason reason) {
 		System.out.println(reason);
 	}
    

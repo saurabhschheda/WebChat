@@ -1,26 +1,33 @@
 package com.webchat.model;
 
+import java.util.ArrayList;
+import java.sql.SQLException;
+
 public class Message {
 
 	private String message, source, destination;
+	User user;
+	Team team;
 
-	public Message(String msg) {
-		String[] parts = msg.split("|");
+	public Message(String msg) throws SQLException, ClassNotFoundException {
+		String[] parts = msg.split("\\|");
 		message = parts[1];
 		source = parts[0];
 		destination = parts[2];
+		user = new User(source);
+		team = new Team(destination, user.getOrgName());
 	}
 
 	public String getMessage() { 
 		return message;
 	}
 
-	public String getSource() {
-		return source;
+	public User getSource() {
+		return user;
 	}
 
-	public String getDestination() {
-		return destination;
+	public Team getDestination() {
+		return team;
 	}
 
 }
