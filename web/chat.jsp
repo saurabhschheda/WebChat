@@ -11,28 +11,7 @@
         <div class="container clearfix">  
             <div class="people-list" id="people-list">
                 <div class="search"><%=(String)request.getAttribute("username")%></div>
-                <ul class="list">
-                    <li class="clearfix active">
-                        <div class="about">
-                            <div class="name">Team 1</div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                        <div class="about">
-                            <div class="name">Team 1</div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                        <div class="about">
-                            <div class="name">Team 1</div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                        <div class="about">
-                            <div class="name">Team 1</div>
-                        </div>
-                    </li>
-                </ul>
+                <ul class="list"></ul>
                 <ul class="list-bottom">
                     <li class="clearfix" id="addTeam" onclick="addTeam()">
                         <div class="about">

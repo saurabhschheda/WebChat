@@ -42,15 +42,42 @@ function socketOnMessage(e) {
 }
 
 function socketOnClose(e) {
-    // TODO: Check if this works.
-    console.log(e.data);
-    // window.location.replace(location.host + "/WebChat/fail.jsp");
+    console.log(e);
+    window.location.replace(location.host + "/WebChat/fail.jsp");
+}
+
+function createBasicElement(tag, className, inner) {
+    var el = document.createElement(tag);
+    el.classList.add(className);
+    el.innerHTML = inner;
+    return el;
+}
+
+function setActive(room) {
+    var activeRoom = document.querySelector(".active");
+    if (activeRoom != null) {
+        activeRoom.classList.remove("active");
+    }
+    document.getElementById(chatTo).parentElement.parentElement.classList.add("active");
+}
+
+function createRoomDOM(room) {
+    var roomNameEl = createBasicElement("div", "name", room);
+    roomNameEl.setAttribute("id", room);
+    var aboutEl = createBasicElement("div", "about", roomNameEl.outerHTML);
+    var listEl = document.querySelector('.list');
+    listEl.appendChild(createBasicElement("li", "clearfix", aboutEl.outerHTML));
 }
 
 function initChat(data) {
     console.log(data);
-    // Initialize chat, chatTo
-    // Create Rooms with rooms
+    var roomNames = data.split('|');
+    roomNames.map(function(room) {
+        chat.room = [];
+        createRoomDOM(room);
+    });
+    chatTo = roomNames[0];
+    setActive(chatTo);
 }
 
 function newRoom(id, name) {
