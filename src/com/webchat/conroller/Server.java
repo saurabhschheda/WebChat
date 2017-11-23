@@ -13,20 +13,26 @@ import java.util.ArrayList;
 
 import com.webchat.model.User;
 import com.webchat.model.Team;
+import com.webchat.model.Message;
 
 @ServerEndpoint("/chat")
 public class Server {
 
-	private static Map<String, Session> clients = Collections.synchronizedMap(new LinkedHashMap<String, Session>());
+	private static Map<User, Session> clients = Collections.synchronizedMap(new LinkedHashMap<User, Session>());
 
-	private void initUser(String username, Session s) throws Exception {
-		clients.put(username, s);
-		ArrayList<Team> rooms = User.getTeams(username);
+	private synchronized void initUser(String username, Session s) throws Exception {
+		User user = new User(username);
+		clients.put(user, s);
+		ArrayList<Team> rooms = user.getTeams();
 		String msg = "init";
 		for (Team room : rooms) {
 			msg = msg.concat("|" + room.getName());
 		}
 		s.getBasicRemote().sendText(msg);
+	}
+
+	private synchronized void sendMessage(String msg, Session s) throws Exception {
+		// Send Message to those sessions that contain the destined Room
 	}
 
 	@OnMessage
@@ -37,6 +43,9 @@ public class Server {
 			switch (eventName) {
 				case "newUser":
 					initUser(data, s);
+					break;
+				case "chat":
+					sendMessage(data, s);
 					break;
 				default:
 					System.out.println(msg);

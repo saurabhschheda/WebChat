@@ -96,13 +96,15 @@ function getMessage(sender, message, to) {
 }
 
 function sendMessage() {
-    var messageBoardEl = document.querySelector('.chat-history');
-    var messageInputEl = document.getElementById('message-to-send');
+    console.log("sending message ...")
+    var chatHistoryEl = document.querySelector('.chat-history');
+    var messageInputEl = document.getElementById('toSend');
     var message = messageInputEl.value;
     if (message == '') return;
-    socket.send(currentUser + '|' + message + '|' + chatTo);
+    socket.send('chat|' + currentUser + '|' + message + '|' + chatTo);
     messageInputEl.value = '';
-    messageBoardEl.scrollTop = messageBoardEl.scrollHeight;
+    chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight;
+    console.log(message);
 }
 
 function addTeam() {

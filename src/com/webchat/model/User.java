@@ -9,18 +9,17 @@ import java.sql.ResultSet;
 
 public class User extends Organization implements DBConnection {
 
-	private String username, password;
+	private String username;
+	ArrayList<Team> teams;
 
-	public User(String username, String password, String orgName) throws SQLException, ClassNotFoundException{
-		super(orgName);
+	public User(String username) throws SQLException, ClassNotFoundException {
+		super();
 		this.username = username;
-		this.password = password;
+		setTeams();
 	}
 
-	public static ArrayList<Team> getTeams(String username) throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
-		ArrayList<Team> teams = new ArrayList<Team>();
+	private void setTeams() throws SQLException, ClassNotFoundException {
+		teams = new ArrayList<Team>();
 		String query = "SELECT Team_ID FROM UserTeam WHERE User_ID = '" + username + "';";
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
@@ -30,9 +29,14 @@ public class User extends Organization implements DBConnection {
 		}
 		rs.close();
 		ps.close();
-		con.close();
+	}
+
+	public ArrayList<Team> getTeams() throws SQLException, ClassNotFoundException {
+		if (teams == null) {
+			setTeams();
+		} 
 		return teams;
-	} 
+	}
 
 	public boolean isUsernameValid() throws SQLException {
 		boolean usernameValid = true;
@@ -47,16 +51,14 @@ public class User extends Organization implements DBConnection {
 		return usernameValid;
 	}
 
-	public void addUserToDB() throws SQLException {
+	public void addUserToDB(String password) throws SQLException {
 		String query = "INSERT INTO User VALUES ('" + username + "', '" + password + "', '" + orgId + "');";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.executeUpdate();
 		ps.close();
 	}
 
-	public static boolean authenticate(String username, String password) throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
+	public boolean authenticate(String password) throws SQLException {
 		boolean isOK = false;
 		String query = "SELECT * FROM User WHERE username = '" + username + "' AND password = '" + password + "';";
 		PreparedStatement ps = con.prepareStatement(query);
@@ -66,7 +68,6 @@ public class User extends Organization implements DBConnection {
 		}
 		rs.close();
 		ps.close();
-		con.close();
 		return isOK;
 	}
 

@@ -16,7 +16,8 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		try {
-			if (!User.authenticate(username, password)) {
+			User user = new User(username);
+			if (!user.authenticate(password)) {
 				throw new ValidationException("Username and Password Do Not Match");
 			}
 			request.setAttribute("username", username);

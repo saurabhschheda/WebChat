@@ -52,18 +52,15 @@ public class Team extends Organization implements DBConnection {
 		ps.close();
 	}
 
-	Team(String teamName, String orgName) throws SQLException, ClassNotFoundException {
-		super(orgName);
+	Team(String teamName) throws SQLException, ClassNotFoundException {
+		super();
 		this.teamName = teamName;
-		Class.forName("com.mysql.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
 		getTeamID();
 	}
 
 	Team(int id) throws SQLException, ClassNotFoundException {
+		super();
 		this.teamID = id;
-		Class.forName("com.mysql.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
 		getTeamName();
 	}
 

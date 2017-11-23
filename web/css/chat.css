@@ -121,6 +121,9 @@ body {
   border-radius: 5px;
   resize: none;
 }
+.chat .chat-message textarea:focus {
+  outline-color: rgba(237, 35, 53, 1); 
+}
 .chat .chat-message button {
   float: right;
   color: #ED2335;
@@ -131,6 +134,9 @@ body {
   font-weight: bold;
   background: #F2F5F8;
   padding: 10px;
+}
+button:focus {
+  outline: none;
 }
 .align-left {
   text-align: left;

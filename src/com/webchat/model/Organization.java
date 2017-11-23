@@ -44,17 +44,20 @@ public class Organization implements DBConnection {
 		ps.close();
 	}
 
-	Organization(String orgName) throws SQLException, ClassNotFoundException {
+	private void setConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
+	}
+
+	public void setOrgName(String orgName) throws SQLException {
 		this.orgName = orgName;
 		getOrgID();
 	}
 
-	Organization() {
+	Organization() throws ClassNotFoundException, SQLException {
 		orgId = 0;
 		orgName = "";
-		con = null;
+		setConnection();
 	}
 
 }
