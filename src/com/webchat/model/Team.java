@@ -42,12 +42,33 @@ public class Team extends Organization implements DBConnection {
 		ps.close();
 	}
 
+	private void getTeamName() throws SQLException {
+		String query = "SELECT Name FROM Team WHERE ID = '" + teamID + "';";
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		rs.first();
+		teamName = rs.getString(1);
+		rs.close();
+		ps.close();
+	}
+
 	Team(String teamName, String orgName) throws SQLException, ClassNotFoundException {
 		super(orgName);
 		this.teamName = teamName;
 		Class.forName("com.mysql.jdbc.Driver");
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
 		getTeamID();
+	}
+
+	Team(int id) throws SQLException, ClassNotFoundException {
+		this.teamID = id;
+		Class.forName("com.mysql.jdbc.Driver");
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
+		getTeamName();
+	}
+
+	public String getName() {
+		return teamName;
 	}
 
 	@Override

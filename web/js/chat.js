@@ -7,7 +7,7 @@ var chat = {};
 var socket = undefined;
 
 function connect() {
-    socket = new WebSocket("ws://"+ location.host + location.pathname +"chat");
+    socket = new WebSocket("ws://"+ location.host + "/WebChat/chat");
 
     //add the event listener for the socket object
     socket.onopen = socketOnOpen;
@@ -23,32 +23,32 @@ function disconnect() {
 
 function socketOnOpen(e) {
     console.log("WebSocket now Ready");
+    socket.send("newUser|" + currentUser);
 }
 
 function socketOnMessage(e) {
     var eventName = e.data.substr(0, e.data.indexOf("|"));
     var data = e.data.substr(e.data.indexOf("|") + 1);
-    var fn;
     switch (eventName) {
         case 'init':
-            fn = initChat;
+            initChat(data);
             break;
         case 'newRoom': 
-            fn = newRoom;
+            newRoom(data);
             break;
         case 'message':
-            fn = getMessage;
+            getMessage(data);
     }
-    fn.apply(null, data.split('|'));
 }
 
 function socketOnClose(e) {
     // TODO: Check if this works.
-    window.location.replace(location.host + location.pathname);
+    console.log(e.data);
+    // window.location.replace(location.host + "/WebChat/fail.jsp");
 }
 
-function initChat(user, rooms) {
-    // Initialize currentUser with user
+function initChat(data) {
+    console.log(data);
     // Initialize chat, chatTo
     // Create Rooms with rooms
 }
@@ -79,6 +79,5 @@ function addTeam() {
     // Send new room details to socket
 }
 
-document.onload(function() {
-    connect();
-});
+currentUser = document.querySelector(".search").innerHTML;
+connect();

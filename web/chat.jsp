@@ -10,7 +10,7 @@
     <body>
         <div class="container clearfix">  
             <div class="people-list" id="people-list">
-                <div class="search">Username</div>
+                <div class="search"><%=(String)request.getAttribute("username")%></div>
                 <ul class="list">
                     <li class="clearfix active">
                         <div class="about">

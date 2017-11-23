@@ -51,4 +51,10 @@ public class Organization implements DBConnection {
 		getOrgID();
 	}
 
+	Organization() {
+		orgId = 0;
+		orgName = "";
+		con = null;
+	}
+
 }
