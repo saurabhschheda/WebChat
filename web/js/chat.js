@@ -54,30 +54,34 @@ function createBasicElement(tag, className, inner) {
 }
 
 function setActive(room) {
-    var activeRoom = document.querySelector(".active");
-    if (activeRoom != null) {
-        activeRoom.classList.remove("active");
+    if (chatTo != room) {
+        var activeRoom = document.querySelector(".active");
+        if (activeRoom != null) {
+            activeRoom.classList.remove("active");
+        }
+        document.getElementById(room).parentElement.parentElement.classList.add("active");
+        chatTo = room;
+        // TODO: Clear the chat history and rerender from chat
     }
-    document.getElementById(chatTo).parentElement.parentElement.classList.add("active");
 }
 
 function createRoomDOM(room) {
     var roomNameEl = createBasicElement("div", "name", room);
     roomNameEl.setAttribute("id", room);
     var aboutEl = createBasicElement("div", "about", roomNameEl.outerHTML);
-    var listEl = document.querySelector('.list');
-    listEl.appendChild(createBasicElement("li", "clearfix", aboutEl.outerHTML));
+    var listEl = createBasicElement("li", "clearfix", aboutEl.outerHTML);
+    listEl.setAttribute("onclick", "setActive('" + room + "')");
+    var list = document.querySelector('.list');
+    list.appendChild(listEl);
 }
 
 function initChat(data) {
-    console.log(data);
     var roomNames = data.split('|');
     roomNames.map(function(room) {
         chat.room = [];
         createRoomDOM(room);
     });
-    chatTo = roomNames[0];
-    setActive(chatTo);
+    setActive(roomNames[0]);
 }
 
 function newRoom(id, name) {

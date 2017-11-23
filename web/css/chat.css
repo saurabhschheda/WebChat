@@ -113,7 +113,7 @@ body {
   padding: 20px;
 }
 .chat .chat-message textarea {
-  width: 85%;
+  width: 80%;
   border: none;
   padding: 10px 20px;
   font: 14px/22px "Lato", Arial, sans-serif;

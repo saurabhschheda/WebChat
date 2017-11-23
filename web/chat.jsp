@@ -50,7 +50,7 @@
                 </div>
                 <div class="chat-message clearfix">
                     <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="1"></textarea>
-                    <button id="send" onclick="sendMessage">Send</button>
+                    <button id="send" onclick="sendMessage">Send <i class="fa fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
