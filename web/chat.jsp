@@ -29,13 +29,13 @@
             </div>
             <div class="chat">                
                 <div class="chat-history">
-                    <ul>
+                    <ul id="history">
                         <li class="clearfix">
                             <div class="message-data align-right">
                                 <span class="message-data-name">Sender</span>
                             </div>
                             <div class="message other-message float-right">
-                                Message
+                                I sent
                             </div>
                         </li>
                         <li>
@@ -43,7 +43,7 @@
                                 <span class="message-data-name">Sender</span>
                             </div>
                             <div class="message my-message">
-                                Message
+                                He Sent
                             </div>
                         </li>
                     </ul>

@@ -2,7 +2,7 @@
 var chatTo = null;
 var currentUser = null;
 // Map from Room to List of all Chats
-var chat = {};
+var chat = new Object();
 // Socket
 var socket = undefined;
 
@@ -33,9 +33,6 @@ function socketOnMessage(e) {
         case 'init':
             initChat(data);
             break;
-        case 'newRoom': 
-            newRoom(data);
-            break;
         case 'message':
             getMessage(data);
     }
@@ -61,7 +58,7 @@ function setActive(room) {
         }
         document.getElementById(room).parentElement.parentElement.classList.add("active");
         chatTo = room;
-        // TODO: Clear the chat history and rerender from chat
+        renderChatHistory(chatTo);
     }
 }
 
@@ -78,39 +75,59 @@ function createRoomDOM(room) {
 function initChat(data) {
     var roomNames = data.split('|');
     roomNames.map(function(room) {
-        chat.room = [];
+        chat[room] = [];
         createRoomDOM(room);
     });
     setActive(roomNames[0]);
 }
 
-function newRoom(id, name) {
-    // Add to room list
-    // Update chat
-    // Add DOM Element to chatlist
+function renderChatBubble(sender, message) {
+    var senderSpan = createBasicElement("span", "message-data-name", sender);
+    var senderDiv = createBasicElement("div", "message-data", senderSpan.outerHTML);
+    var messageDiv = createBasicElement("div", "message", message);
+    if (sender == currentUser) {
+        senderDiv.classList.add("align-right");
+        messageDiv.classList.add("other-message");
+        messageDiv.classList.add("float-right");
+    } else {
+        messageDiv.classList.add("my-message");
+    }
+    var bubble = createBasicElement("li", "clearfix", "");
+    bubble.appendChild(senderDiv);
+    bubble.appendChild(messageDiv);
+    return bubble;
+}
+
+function renderChatHistory() {
+    var chatHistoryEl = document.getElementById('history');
+    chatHistoryEl.innerHTML = "";
+    chat[chatTo].map(function(chatData) {
+        var bubble = renderChatBubble(chatData.sender, chatData.message);
+        chatHistoryEl.appendChild(bubble);
+    });
+    chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight;
 }
 
 function getMessage(data) {
-    // Update chat
-    // Rerender chatTo's chat history
-    console.log(data);
+    data = data.split("|");
+    var sender = data[0];
+    var message = data[1];
+    var receiver = data[2];
+    chat[receiver].push({
+        "sender": sender,
+        "message": message
+    });
+    renderChatHistory();
 }
 
 function sendMessage() {
     console.log("sending message ...");
-    var chatHistoryEl = document.querySelector('.chat-history');
     var messageInputEl = document.getElementById('toSend');
     var message = messageInputEl.value;
     if (message == '') return;
     socket.send('chat|' + currentUser + '|' + message + '|' + chatTo);
     messageInputEl.value = '';
-    chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight;
     console.log(message);
-}
-
-function addTeam() {
-    // TODO: Figure out UX flow for this 
-    // Send new room details to socket
 }
 
 currentUser = document.querySelector(".search").innerHTML;
