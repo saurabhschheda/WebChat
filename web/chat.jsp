@@ -13,40 +13,16 @@
                 <div class="search"><%=(String)request.getAttribute("username")%></div>
                 <ul class="list"></ul>
                 <ul class="list-bottom">
-                    <li class="clearfix" id="addTeam" onclick="addTeam()">
-                        <div class="about">
-                            <div class="name">
-                                <i class="fa fa-plus"></i> Add Team</div>
-                        </div>
-                    </li>
                     <li class="clearfix" id="logout" onclick="disconnect()">
                         <div class="about">
-                            <div class="name">
-                                <i class="fa fa-power-off"></i> Logout</div>
+                            <div class="name"><i class="fa fa-power-off"></i> Logout</div>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="chat">                
                 <div class="chat-history">
-                    <ul id="history">
-                        <li class="clearfix">
-                            <div class="message-data align-right">
-                                <span class="message-data-name">Sender</span>
-                            </div>
-                            <div class="message other-message float-right">
-                                I sent
-                            </div>
-                        </li>
-                        <li>
-                            <div class="message-data">
-                                <span class="message-data-name">Sender</span>
-                            </div>
-                            <div class="message my-message">
-                                He Sent
-                            </div>
-                        </li>
-                    </ul>
+                    <ul id="history"></ul>
                 </div>
                 <div class="chat-message clearfix">
                     <textarea name="toSend" id="toSend" placeholder="Type your message" rows="1"></textarea>

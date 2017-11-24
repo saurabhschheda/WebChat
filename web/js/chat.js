@@ -16,7 +16,6 @@ function connect() {
 }
 
 function disconnect() {
-    //close the connection and the reset the socket object
     socket.close();
     socket = null;
 }
@@ -40,7 +39,7 @@ function socketOnMessage(e) {
 
 function socketOnClose(e) {
     console.log(e);
-    window.location.replace(location.host + "/WebChat/fail.jsp");
+    window.location.href = "http://" + location.host + "/WebChat";
 }
 
 function createBasicElement(tag, className, inner) {

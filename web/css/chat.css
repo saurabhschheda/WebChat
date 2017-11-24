@@ -53,9 +53,6 @@ body {
   position: absolute;
   bottom: 48px;
 }
-.list-bottom li {
-  display: inline-block;
-}
 .chat {
   width: 490px;
   float: left;
