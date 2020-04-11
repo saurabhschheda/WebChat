@@ -18,7 +18,7 @@ public class Organization implements DBConnection {
 		ResultSet rs = ps.executeQuery();
 		rs.first();
 		orgId = rs.getInt(1);
-    orgId += 1;
+    	orgId += 1;
 		rs.close();
 		ps.close();
 	}

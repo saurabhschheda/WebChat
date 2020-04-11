@@ -1,6 +1,5 @@
 package com.webchat.model;
 
-import java.util.ArrayList;
 import java.sql.SQLException;
 
 public class Message {
