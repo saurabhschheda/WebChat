@@ -5,8 +5,8 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>WebChat</title>
       <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-      <link href="./css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-      <link href="./css/style.css" rel="stylesheet">
+      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>  
   <body>  
@@ -82,6 +82,6 @@
 
     </div>
     
-    <script src="./js/login.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>

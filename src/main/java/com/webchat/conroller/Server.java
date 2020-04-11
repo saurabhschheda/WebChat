@@ -1,19 +1,18 @@
 package com.webchat.conroller;
 
-import javax.websocket.OnMessage;
-import javax.websocket.OnClose;
-import javax.websocket.server.ServerEndpoint;
-import javax.websocket.Session;
-import javax.websocket.CloseReason;
+import com.webchat.model.Message;
+import com.webchat.model.Team;
+import com.webchat.model.User;
 
-import java.util.Map;
+import javax.websocket.CloseReason;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
-
-import com.webchat.model.User;
-import com.webchat.model.Team;
-import com.webchat.model.Message;
+import java.util.Map;
 
 @ServerEndpoint("/chat")
 public class Server {
