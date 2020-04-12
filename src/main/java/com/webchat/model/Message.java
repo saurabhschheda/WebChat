@@ -1,5 +1,6 @@
 package com.webchat.model;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class Message {
@@ -8,7 +9,7 @@ public class Message {
 	User user;
 	Team team;
 
-	public Message(String msg) throws SQLException, ClassNotFoundException {
+	public Message(String msg) throws SQLException, ClassNotFoundException, IOException {
 		String[] parts = msg.split("\\|");
 		message = parts[1];
 		source = parts[0];

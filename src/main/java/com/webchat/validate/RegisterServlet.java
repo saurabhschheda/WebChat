@@ -33,7 +33,7 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ValidationException e) {
+        } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("fail.jsp").forward(request, response);
         }

@@ -1,12 +1,12 @@
 package com.webchat.model;
 
-import java.sql.DriverManager;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 
-public class Team extends Organization implements DBConnection {
+public class Team extends Organization {
 	
 	private int teamID;
 	private String teamName;
@@ -42,13 +42,13 @@ public class Team extends Organization implements DBConnection {
 		return id;
 	}
 
-	Team(String teamName, String orgName) throws SQLException, ClassNotFoundException {
+	Team(String teamName, String orgName) throws SQLException, ClassNotFoundException, IOException {
 		super(orgName);
 		this.teamName = teamName;
 		getTeamID();
 	}
 
-	Team(int id) throws SQLException, ClassNotFoundException {
+	Team(int id) throws SQLException, ClassNotFoundException, IOException {
 		super();
 		this.teamID = id;
 		getTeamName();
@@ -59,7 +59,7 @@ public class Team extends Organization implements DBConnection {
 		return teamName;
 	}
 
-	public ArrayList<User> getUsers() throws SQLException, ClassNotFoundException {
+	public ArrayList<User> getUsers() throws SQLException, ClassNotFoundException, IOException {
 		ArrayList<User> users = new ArrayList<User>();
 		String query = "SELECT User_ID FROM UserTeam WHERE Team_ID = '" + teamID + "';";
 		PreparedStatement ps = con.prepareStatement(query);

@@ -1,18 +1,19 @@
 package com.webchat.model;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 
-public class User extends Organization implements DBConnection {
+public class User extends Organization {
 
 	private String username;
 	ArrayList<Team> teams;
 
 	public String getUsername() { return username; };
 
-	public User(String username) throws SQLException, ClassNotFoundException {
+	public User(String username) throws SQLException, ClassNotFoundException, IOException {
 		super();
 		this.username = username;
 		setOrgID(getOrg());
@@ -29,12 +30,12 @@ public class User extends Organization implements DBConnection {
 		return id;
 	}
 
-	public User(String username, String orgName) throws SQLException, ClassNotFoundException {
+	public User(String username, String orgName) throws SQLException, ClassNotFoundException, IOException {
 		super(orgName);
 		this.username = username;
 	}
 
-	private void setTeams() throws SQLException, ClassNotFoundException {
+	private void setTeams() throws SQLException, ClassNotFoundException, IOException {
 		teams = new ArrayList<Team>();
 		String query = "SELECT Team_ID FROM UserTeam WHERE User_ID = '" + username + "';";
 		PreparedStatement ps = con.prepareStatement(query);
@@ -47,7 +48,7 @@ public class User extends Organization implements DBConnection {
 		ps.close();
 	}
 
-	public ArrayList<Team> getTeams() throws SQLException, ClassNotFoundException {
+	public ArrayList<Team> getTeams() throws SQLException, ClassNotFoundException, IOException {
 		setTeams(); 
 		return teams;
 	}

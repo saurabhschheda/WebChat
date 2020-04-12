@@ -1,12 +1,16 @@
 package com.webchat.model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.Objects;
+import java.util.Properties;
 
-public class Organization implements DBConnection {
+public class Organization {
 	
 	protected int orgId;
 	protected String orgName;
@@ -54,11 +58,14 @@ public class Organization implements DBConnection {
 		ps.close();
 	}
 
-	private void setConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebChat", USERNAME, PASSWORD);
+	private void setConnection() throws ClassNotFoundException, SQLException, IOException {
+		Class.forName("org.mariadb.jdbc.Driver");
+		String propertiesPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath() + "db.properties";
+		Properties dbProperties = new Properties();
+		dbProperties.load(new FileInputStream(propertiesPath));
+		String dbUrl = "jdbc:" + dbProperties.getProperty("dbType") + "://" + dbProperties.getProperty("dbHost") + "/" + dbProperties.getProperty("dbName");
+		con = DriverManager.getConnection(dbUrl, dbProperties.getProperty("dbUserName"), dbProperties.getProperty("dbPassword"));
 	}
-
 	public void setOrgName(String orgName) throws SQLException {
 		this.orgName = orgName;
 		getID();
@@ -73,17 +80,17 @@ public class Organization implements DBConnection {
 		return orgName;
 	}
 
-	Organization(String orgName) throws ClassNotFoundException, SQLException {
+	Organization(String orgName) throws ClassNotFoundException, SQLException, IOException {
 		setConnection();
 		setOrgName(orgName);
 	}
 
-	Organization(int id) throws ClassNotFoundException, SQLException {
+	Organization(int id) throws ClassNotFoundException, SQLException, IOException {
 		setConnection();
 		setOrgID(id);
 	}
 
-	Organization() throws ClassNotFoundException, SQLException {
+	Organization() throws ClassNotFoundException, SQLException, IOException {
 		orgId = -1;
 		orgName = "";
 		setConnection();
