@@ -14,10 +14,10 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException, ValidationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String teamName = request.getParameter("team");
+        String orgName = request.getParameter("team");
         try {
-            User newUser = new User(username, teamName);
-            if (!newUser.isUsernameValid()) {
+            User newUser = new User(username, orgName);
+            if (!newUser.isUsernamePresent()) {
                 throw new ValidationException("Username already Exists");
             }
             newUser.addUserToDB(password);
