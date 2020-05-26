@@ -34,4 +34,14 @@ public class Authenticator {
         return usernamePresent;
     }
 
+    boolean authenticate(String username, String password) throws SQLException {
+        boolean isAuthenticated = false;
+        String query = "SELECT * FROM user WHERE username = '" + username + "';";
+        ResultSet rs = dbService.runSelectQuery(query);
+        if (rs.first()) {
+            isAuthenticated = true;
+        }
+        rs.close();
+        return isAuthenticated;
+    }
 }

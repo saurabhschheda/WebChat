@@ -1,14 +1,10 @@
 package com.webchat.validate;
 
-import com.webchat.model.User;
-
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 public class LoginServlet extends HttpServlet {
@@ -17,16 +13,16 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException, ValidationException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-//		try {
-//			User user = new User(username, password);
-//			if (!user.authenticate(password)) {
-//				throw new ValidationException("Username and Password Do Not Match");
-//			}
+		try {
+			Authenticator authenticator = Authenticator.getInstance();
+			if (!authenticator.authenticate(username, password)) {
+				throw new ValidationException("Invalid Username or Password");
+			}
 			request.setAttribute("username", username);
 			request.getRequestDispatcher("chat.jsp").forward(request, response);
-//		} catch (ClassNotFoundException | SQLException e) {
-//			throw new ValidationException();
-//		}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new ValidationException();
+		}
 	}
 
 	@Override
