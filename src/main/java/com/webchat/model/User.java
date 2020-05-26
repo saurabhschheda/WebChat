@@ -1,5 +1,7 @@
 package com.webchat.model;
 
+import com.webchat.validate.ValidationException;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,23 +11,29 @@ public class User extends Organization {
 
 	private String username;
 
+	private String password;
+
 //	ArrayList<Team> teams;
 
 	public String getUsername() { return username; };
 
-//	public User(String username) throws SQLException, ClassNotFoundException, IOException {
-//		super();
-//		this.username = username;
-//		setOrgID(getOrg());
-//	}
-
-	public User(String username, String orgName) throws SQLException, ClassNotFoundException, IOException {
+	public User(String username, String password, String orgName) throws SQLException, ClassNotFoundException, IOException {
 		super(orgName);
 		this.username = username;
+		this.password = password;
 	}
 
+	public void register() throws SQLException {
+		String query = "INSERT INTO user VALUES ('" + username + "', '" + password + "', '" + orgId + "');";
+		dbService.runInsertOrUpdateQuery(query);
+	}
+
+//	public User(String username, String orgName) throws SQLException, ClassNotFoundException, IOException {
+//		super(orgName);
+//		this.username = username;
+//	}
+
 //	private int getOrg() throws SQLException {
-//		String query = "SELECT org_id FROM user WHERE username = '" + username + "';";
 //		ResultSet rs = dbService.runSelectQuery(query);
 //		rs.first();
 //		int id = rs.getInt(1);
@@ -49,30 +57,4 @@ public class User extends Organization {
 //		return teams;
 //	}
 
-	public boolean isUsernamePresent() throws SQLException {
-		boolean usernamePresent = true;
-		String query = "SELECT * FROM user WHERE username = '" + username + "';";
- 		ResultSet rs = dbService.runSelectQuery(query);
-		if (rs.first()) {
-			usernamePresent = false;
-		}
-		rs.close();
-		return usernamePresent;
-	}
-
-	public void addUserToDB(String password) throws SQLException {
-		String query = "INSERT INTO user VALUES ('" + username + "', '" + password + "', '" + orgId + "');";
-		dbService.runInsertOrUpdateQuery(query);
-	}
-
-//	public boolean authenticate(String password) throws SQLException {
-//		boolean isOK = false;
-//		String query = "SELECT * FROM User WHERE username = '" + username + "' AND password = '" + password + "';";
-//		ResultSet rs = dbService.runSelectQuery(query);
-//		if (rs.first())	{
-//			isOK = true;
-//		}
-//		rs.close();
-//		return isOK;
-//	}
 }

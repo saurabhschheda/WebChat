@@ -16,11 +16,12 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String orgName = request.getParameter("team");
         try {
-            User newUser = new User(username, orgName);
-            if (!newUser.isUsernamePresent()) {
+            Authenticator authenticator = Authenticator.getInstance();
+            if (!authenticator.isUsernamePresent(username)) {
                 throw new ValidationException("Username already Exists");
             }
-            newUser.addUserToDB(password);
+            User newUser = new User(username, password, orgName);
+            newUser.register();
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

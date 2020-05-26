@@ -17,10 +17,10 @@ public class Organization {
 	private void addToDB() throws SQLException {
 		String query = "INSERT INTO organization(name) VALUES ('" + orgName + "');";
 		dbService.runInsertOrUpdateQuery(query);
-		setIDFromDB();
+		readIDFromDB();
 	}
 
-	private void setIDFromDB() throws SQLException {
+	private void readIDFromDB() throws SQLException {
 		String query = "SELECT ID FROM organization WHERE name = '" + orgName + "';";
 		ResultSet rs = dbService.runSelectQuery(query);
 		if (rs.first()) {
@@ -41,23 +41,24 @@ public class Organization {
 //		ps.close();
 //	}
 
-	public void setOrgName(String orgName) throws SQLException {
-		this.orgName = orgName;
-		setIDFromDB();
-	}
+//	public void setOrgName(String orgName) throws SQLException {
+//		this.orgName = orgName;
+//		setIDFromDB();
+//	}
 
 //	public void setOrgID(int orgID) throws SQLException {
 //		this.orgId = orgID;
 //		getName();
 //	}
 
-	public String getOrgName() {
-		return orgName;
-	}
+//	public String getOrgName() {
+//		return orgName;
+//	}
 
 	Organization(String orgName) throws ClassNotFoundException, SQLException, IOException {
 		dbService = MariaDBClient.getInstance();
-		setOrgName(orgName);
+		this.orgName = orgName;
+		readIDFromDB();
 	}
 
 //	Organization() throws ClassNotFoundException, SQLException, IOException {
