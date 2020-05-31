@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>   
     <body>
-        <div class="container clearfix">  
+        <div class="container clearfix">
             <div class="people-list" id="people-list">
                 <div class="search"><%=(String)request.getAttribute("username")%></div>
                 <ul class="list"></ul>

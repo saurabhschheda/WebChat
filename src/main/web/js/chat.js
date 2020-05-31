@@ -1,10 +1,10 @@
 // Current Room
-var chatTo = null;
-var currentUser = null;
+let chatTo = null;
+let currentUser = null;
 // Map from Room to List of all Chats
-var chat = new Object();
+let chat = {};
 // Socket
-var socket = undefined;
+let socket = undefined;
 
 function connect() {
     socket = new WebSocket("ws://"+ location.host + "/WebChat/chat");
@@ -84,7 +84,7 @@ function renderChatBubble(sender, message) {
     var senderSpan = createBasicElement("span", "message-data-name", sender);
     var senderDiv = createBasicElement("div", "message-data", senderSpan.outerHTML);
     var messageDiv = createBasicElement("div", "message", message);
-    if (sender == currentUser) {
+    if (sender === currentUser) {
         senderDiv.classList.add("align-right");
         messageDiv.classList.add("other-message");
         messageDiv.classList.add("float-right");
@@ -123,7 +123,7 @@ function sendMessage() {
     console.log("sending message ...");
     var messageInputEl = document.getElementById('toSend');
     var message = messageInputEl.value;
-    if (message == '') return;
+    if (message === '') return;
     socket.send('chat|' + currentUser + '|' + message + '|' + chatTo);
     messageInputEl.value = '';
     console.log(message);

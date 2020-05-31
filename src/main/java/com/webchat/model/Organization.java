@@ -31,40 +31,22 @@ public class Organization {
 		rs.close();
 	}
 
-//	private void getName() throws SQLException {
-//		String query = "SELECT Name FROM Organization WHERE ID = '" + orgId + "';";
-//		PreparedStatement ps = con.prepareStatement(query);
-//		ResultSet rs = ps.executeQuery();
-//		rs.first();
-//		orgName = rs.getString(1);
-//		rs.close();
-//		ps.close();
-//	}
-
-//	public void setOrgName(String orgName) throws SQLException {
-//		this.orgName = orgName;
-//		setIDFromDB();
-//	}
-
-//	public void setOrgID(int orgID) throws SQLException {
-//		this.orgId = orgID;
-//		getName();
-//	}
-
-//	public String getOrgName() {
-//		return orgName;
-//	}
-
-	Organization(String orgName) throws ClassNotFoundException, SQLException, IOException {
+	public Organization(String orgName) throws ClassNotFoundException, SQLException, IOException {
 		dbService = MariaDBClient.getInstance();
 		this.orgName = orgName;
 		readIDFromDB();
 	}
 
-//	Organization() throws ClassNotFoundException, SQLException, IOException {
-//		orgId = -1;
-//		orgName = "";
-//		dbService = MariaDBClient.getInstance();
-//	}
+	Organization(int orgId, String orgName) throws ClassNotFoundException, SQLException, IOException {
+		dbService = MariaDBClient.getInstance();
+		this.orgId = orgId;
+		this.orgName = orgName;
+	}
+
+	Organization(Organization organization) throws ClassNotFoundException, SQLException, IOException {
+		dbService = MariaDBClient.getInstance();
+		this.orgId = organization.orgId;
+		this.orgName = organization.orgName;
+	}
 
 }

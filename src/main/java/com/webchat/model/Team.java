@@ -1,16 +1,22 @@
-//package com.webchat.model;
-//
-//import java.io.IOException;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.ArrayList;
-//import java.sql.PreparedStatement;
-//
-//public class Team extends Organization {
-//
-//	private int teamID;
-//	private String teamName;
-//
+package com.webchat.model;
+
+public class Team {
+
+	private int teamID;
+
+    private String teamName;
+
+    Team(int teamID, String teamName) {
+        this.teamID = teamID;
+        this.teamName = teamName;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+
+
 //	private void getTeamID() throws SQLException {
 //		String query = "SELECT ID FROM Team WHERE Name = '" + teamName + "' AND Org_ID = '" + orgId + "';";
 //		PreparedStatement ps = con.prepareStatement(query);
@@ -42,12 +48,6 @@
 //		return id;
 //	}
 //
-//	Team(String teamName, String orgName) throws SQLException, ClassNotFoundException, IOException {
-//		super(orgName);
-//		this.teamName = teamName;
-//		getTeamID();
-//	}
-//
 //	Team(int id) throws SQLException, ClassNotFoundException, IOException {
 //		super();
 //		this.teamID = id;
@@ -77,5 +77,5 @@
 //	public void finalize() throws SQLException {
 //		con.close();
 //	}
-//
-//}
+
+}

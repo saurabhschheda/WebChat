@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+
+import com.webchat.model.Organization;
 import com.webchat.model.User;
 
 public class RegisterServlet extends HttpServlet {
@@ -20,7 +22,8 @@ public class RegisterServlet extends HttpServlet {
             if (!authenticator.isUsernamePresent(username)) {
                 throw new ValidationException("Username already Exists");
             }
-            User newUser = new User(username, password, orgName);
+            Organization organization = new Organization(orgName);
+            User newUser = new User(username, password, organization);
             newUser.register();
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (ClassNotFoundException | SQLException e) {
