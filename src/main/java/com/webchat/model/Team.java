@@ -1,14 +1,31 @@
 package com.webchat.model;
 
+import com.webchat.db.DBService;
+import com.webchat.db.impl.MariaDBClient;
+
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Team {
 
-	private int teamID;
+    private int teamID;
 
     private String teamName;
 
-    Team(int teamID, String teamName) {
+    public List<String> getMembers() {
+        return members;
+    }
+
+    private List<String> members;
+
+    Team(int teamID, String teamName) throws ClassNotFoundException, IOException, SQLException {
         this.teamID = teamID;
         this.teamName = teamName;
+        this.members = new ArrayList<>();
+        readMembersFromDB();
     }
 
     public String getTeamName() {
@@ -58,20 +75,15 @@ public class Team {
 //	public String getName() {
 //		return teamName;
 //	}
-//
-//	public ArrayList<User> getUsers() throws SQLException, ClassNotFoundException, IOException {
-//		ArrayList<User> users = new ArrayList<User>();
-//		String query = "SELECT User_ID FROM UserTeam WHERE Team_ID = '" + teamID + "';";
-//		PreparedStatement ps = con.prepareStatement(query);
-//		ResultSet rs = ps.executeQuery();
-//		while (rs.next()) {
-//			String username = rs.getString(1);
-//			users.add(new User(username));
-//		}
-//		rs.close();
-//		ps.close();
-//		return users;
-//	}
+
+	private void readMembersFromDB() throws SQLException, ClassNotFoundException, IOException {
+		String query = "SELECT user FROM userteam WHERE team = '" + this.teamID + "';";
+		ResultSet rs = MariaDBClient.getInstance().runSelectQuery(query);
+		while (rs.next()) {
+			members.add(rs.getString(1));
+		}
+		rs.close();
+	}
 //
 //	@Override
 //	public void finalize() throws SQLException {

@@ -1,6 +1,5 @@
 package com.webchat.model;
 
-import com.webchat.db.DBService;
 import com.webchat.db.impl.MariaDBClient;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ public class User extends Organization {
 
 	private String password;
 
-	List<Team> teams;
+	private List<Team> teams;
 
 	public User(String username, String password, Organization org) throws ClassNotFoundException, SQLException, IOException {
 		super(org);
@@ -42,7 +41,7 @@ public class User extends Organization {
 		return user;
 	}
 
-	private void initializeTeams() throws SQLException {
+	private void initializeTeams() throws SQLException, ClassNotFoundException, IOException {
 		String query = "SELECT username, team.id, team.name FROM userteam " +
 				"INNER JOIN user ON userteam.user=user.username " +
 				"INNER JOIN team ON userteam.team=team.id " +
@@ -59,29 +58,13 @@ public class User extends Organization {
 		return teams;
 	}
 
-//	public User(String username, String orgName) throws SQLException, ClassNotFoundException, IOException {
-//		super(orgName);
-//		this.username = username;
-
-//	}
-//	private int getOrg() throws SQLException {
-//		ResultSet rs = dbService.runSelectQuery(query);
-//		rs.first();
-//		int id = rs.getInt(1);
-//		rs.close();
-//		return id;
-
-//	}
-//	private void setTeams() throws SQLException, ClassNotFoundException, IOException {
-//		teams = new ArrayList<Team>();
-//		String query = "SELECT Team_ID FROM UserTeam WHERE User_ID = '" + username + "';";
-//		ResultSet rs = dbService.runSelectQuery(query);
-//		while(rs.next()) {
-//			int id = rs.getInt(1);
-//			teams.add(new Team(id));
-//		}
-//		rs.close();
-
-//	}
+	public Team findTeamByName(String name) {
+		for (Team team: this.teams) {
+			if (name.equals(team.getTeamName())) {
+				return team;
+			}
+		}
+		return null;
+	}
 
 }

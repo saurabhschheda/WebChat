@@ -14,10 +14,13 @@ import java.util.*;
 @ServerEndpoint("/chat")
 public class Server {
 
-	private static Map<String, Session> clients = Collections.synchronizedMap(new LinkedHashMap<String, Session>());
+	private static Map<String, Session> clients = Collections.synchronizedMap(new LinkedHashMap<>());
+
+	private static Map<String, User> loggedInUsers = Collections.synchronizedMap(new LinkedHashMap<>());
 
 	private synchronized void initialize(String username, Session session) throws Exception {
 		User user = User.findUser(username);
+		loggedInUsers.put(username, user);
 		clients.put(username, session);
 		List<Team> teams = user.getTeams();
 		String msg = "init";
@@ -27,15 +30,18 @@ public class Server {
 		session.getBasicRemote().sendText(msg);
 	}
 
-//	private synchronized void sendMessage(String msg, Session s) throws Exception {
-//		Message message = new Message(msg);
-//		ArrayList<User> receivers = message.getDestination().getUsers();
-//		for (User receiver : receivers) {
-//			if (clients.containsKey(receiver.getUsername())) {
-//				clients.get(receiver.getUsername()).getBasicRemote().sendText("message|" + msg);
-//			}
-//		}
-//	}
+	private synchronized void sendMessage(String msg, Session s) throws Exception {
+		String[] parts = msg.split("\\|");
+		User source = loggedInUsers.get(parts[0]);
+		String message = parts[1];
+		Team destination = source.findTeamByName(parts[2]);
+		List<String> receivers = destination.getMembers();
+		for (String receiver : receivers) {
+			if (loggedInUsers.containsKey(receiver)) {
+				clients.get(receiver).getBasicRemote().sendText("message|" + msg);
+			}
+		}
+	}
 
 	@OnMessage
 	public synchronized void onMessage(Session session, String msg) throws IOException {
@@ -46,9 +52,9 @@ public class Server {
 				case "newUser":
 					initialize(data, session);
 					break;
-//				case "chat":
-//					sendMessage(data, session);
-//					break;
+				case "chat":
+					sendMessage(data, session);
+					break;
 				default:
 					System.out.println(msg);
 			}
