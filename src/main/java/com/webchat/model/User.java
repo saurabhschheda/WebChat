@@ -2,6 +2,7 @@ package com.webchat.model;
 
 import com.webchat.db.impl.MariaDBClient;
 
+import javax.websocket.Session;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,21 +12,16 @@ import java.util.List;
 public class User extends Organization {
 
 	private String username;
-
 	private String password;
-
 	private List<Team> teams;
+	private Session session;
 
 	public User(String username, String password, Organization org) throws ClassNotFoundException, SQLException, IOException {
 		super(org);
+		this.session = null;
 		this.username = username;
 		this.password = password;
 		this.teams = new ArrayList<>();
-	}
-
-	public void register() throws SQLException {
-		String query = "INSERT INTO user VALUES ('" + username + "', '" + password + "', '" + orgId + "');";
-		dbService.runInsertOrUpdateQuery(query);
 	}
 
 	public static User findUser(String userId) throws ClassNotFoundException, SQLException, IOException {
@@ -39,6 +35,19 @@ public class User extends Organization {
 		rs.close();
 		user.initializeTeams();
 		return user;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public void register() throws SQLException {
+		String query = "INSERT INTO user VALUES ('" + username + "', '" + password + "', '" + orgId + "');";
+		dbService.runInsertOrUpdateQuery(query);
 	}
 
 	private void initializeTeams() throws SQLException, ClassNotFoundException, IOException {

@@ -14,14 +14,12 @@ import java.util.*;
 @ServerEndpoint("/chat")
 public class Server {
 
-	private static Map<String, Session> clients = Collections.synchronizedMap(new LinkedHashMap<>());
-
 	private static Map<String, User> loggedInUsers = Collections.synchronizedMap(new LinkedHashMap<>());
 
 	private synchronized void initialize(String username, Session session) throws Exception {
 		User user = User.findUser(username);
+		user.setSession(session);
 		loggedInUsers.put(username, user);
-		clients.put(username, session);
 		List<Team> teams = user.getTeams();
 		String msg = "init";
 		for (Team team : teams) {
@@ -38,7 +36,7 @@ public class Server {
 		List<String> receivers = destination.getMembers();
 		for (String receiver : receivers) {
 			if (loggedInUsers.containsKey(receiver)) {
-				clients.get(receiver).getBasicRemote().sendText("message|" + msg);
+				loggedInUsers.get(receiver).getSession().getBasicRemote().sendText("message|" + msg);
 			}
 		}
 	}

@@ -11,13 +11,7 @@ import java.util.List;
 public class Team {
 
     private int teamID;
-
     private String teamName;
-
-    public List<String> getMembers() {
-        return members;
-    }
-
     private List<String> members;
 
     Team(int teamID, String teamName) throws ClassNotFoundException, IOException, SQLException {
@@ -25,6 +19,10 @@ public class Team {
         this.teamName = teamName;
         this.members = new ArrayList<>();
         readMembersFromDB();
+    }
+
+    public List<String> getMembers() {
+        return members;
     }
 
     public String getTeamName() {
