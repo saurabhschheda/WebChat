@@ -58,6 +58,7 @@ function setActive(room) {
         document.getElementById(room).parentElement.parentElement.classList.add("active");
         chatTo = room;
         renderChatHistory(chatTo);
+        inputField.focus();
     }
 }
 
@@ -67,7 +68,7 @@ function createRoomDOM(room) {
     var aboutEl = createBasicElement("div", "about", roomNameEl.outerHTML);
     var listEl = createBasicElement("li", "clearfix", aboutEl.outerHTML);
     listEl.setAttribute("onclick", "setActive('" + room + "')");
-    var list = document.querySelector('.list');
+    var list = document.querySelector('.team-list');
     list.appendChild(listEl);
 }
 
@@ -100,10 +101,10 @@ function renderChatBubble(sender, message) {
 function renderChatHistory() {
     var chatHistoryEl = document.getElementById('history');
     chatHistoryEl.innerHTML = "";
-    chat[chatTo].map(function(chatData) {
-        var bubble = renderChatBubble(chatData.sender, chatData.message);
-        chatHistoryEl.appendChild(bubble);
-    });
+    for (const chatData of chat[chatTo]) {
+            var bubble = renderChatBubble(chatData.sender, chatData.message);
+            chatHistoryEl.appendChild(bubble);
+    }
     chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight;
 }
 
@@ -129,5 +130,17 @@ function sendMessage() {
     console.log(message);
 }
 
-currentUser = document.querySelector(".search").innerHTML;
+const inputField = document.getElementById("toSend");
+inputField.focus();
+
+inputField.addEventListener("keyup", function (e) {
+    if (e.keyCode === 13) {
+        sendMessage();
+        inputField.focus();
+    }
+});
+
+
+
+currentUser = document.querySelector(".username").innerHTML;
 connect();

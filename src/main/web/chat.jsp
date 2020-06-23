@@ -2,33 +2,32 @@
 <html>
     <head>
         <title>WebChat</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/chat.css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>   
+    </head>
     <body>
         <div class="container clearfix">
             <div class="people-list" id="people-list">
-                <div class="search"><%=(String)request.getAttribute("username")%></div>
-                <ul class="list"></ul>
-                <ul class="list-bottom">
-                    <li class="clearfix" id="logout" onclick="disconnect()">
-                        <div class="about">
-                            <div class="name"><i class="fa fa-power-off"></i> Logout</div>
-                        </div>
-                    </li>
-                </ul>
+                <div class="username"><%=(String)request.getAttribute("username")%></div>
+                <ul class="team-list"></ul>
+                <div class="button-bottom">
+                </div>
             </div>
-            <div class="chat">                
+            <div class="chat">
                 <div class="chat-history">
                     <ul id="history"></ul>
                 </div>
-                <div class="chat-message clearfix">
-                    <textarea name="toSend" id="toSend" placeholder="Type your message" rows="1"></textarea>
-                    <button id="send" onclick="sendMessage()">Send <i class="fa fa-paper-plane"></i></button>
+                <div class="chat-message">
+                    <input name="toSend" id="toSend" placeholder="Type your message">
+                    <i id="send" onclick="sendMessage()" class="fa fa-paper-plane"></i>
                 </div>
             </div>
+        </div>
+        <div class="logout" id="logout" onclick="disconnect()">
+            <i class="fa fa-power-off"></i>
         </div>
         <script type="text/javascript" src="js/chat.js"></script>
     </body>

@@ -1,28 +1,41 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
 body {
   background: #e9e9e9;
-  font: 14px/20px "Lato", Arial, sans-serif;
-  padding: 40px 0;
-  color: white;
+  font: 14px 'Roboto';
+  padding: 5vh 0;
+  height: 90vh;
+  width: 100vw;
+  margin: 0;
 }
 
 .container {
   margin: 0 auto;
-  width: 750px;
+  width: 80vw;
+  height: 100%;
+  max-width: 1000px;
   background: #3e2c2f;
-  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 35px 9px #ccc;
+  -moz-box-shadow: 0px 0px 35px 9px #ccc;
+  box-shadow: 0px 0px 35px 9px #ccc;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 .people-list {
-  width: 260px;
+  width: 30%;
+  height: 100%;
   float: left;
+  color: #ffffff;
+  position: relative;
 }
-.people-list .search {
-  padding: 50px;
+.people-list .username {
+  padding: 40px;
   text-align: center;
   font-size: 25px;
 }
@@ -32,39 +45,51 @@ body {
 }
 .people-list ul li {
   padding: 14px 20px;
+  cursor: pointer;
 }
 .people-list ul li:hover {
-  background-color: #71555b
+  background-color: #71555B;
+  transition: background-color .3s ease-in;
 }
 .people-list ul li.active {
   background-color: #ED2553;
 }
-.people-list .about {
-  float: left;
-  margin-top: 8px;
-}
-.people-list .about {
-  padding-left: 8px;
-}
-.people-list .status {
-  color: #92959E;
-}
-.list-bottom {
+.button-bottom {
   position: absolute;
-  bottom: 48px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 30px;
+  text-align: center;
+  font-size: 16px;
 }
 .chat {
-  width: 490px;
+  width: 70%;
+  height: 100%;
   float: left;
   background: #F2F5F8;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   color: #434651;
+  position: relative;
 }
-.chat .chat-history {
+#history {
+  overflow: auto;
   padding: 20px;
-  overflow-y: scroll;
-  height: 70vh;
+  max-height: 75vh;
+}
+#history::-webkit-scrollbar {
+  width: 6px;
+  background-color: #F2F5F8;
+}
+#history::-webkit-scrollbar-track
+{
+  background-color: #F2F5F8;
+}
+#history::-webkit-scrollbar-thumb
+{
+  background-color: rgba(253, 37, 83, 0.7);
+  border-radius: 3px;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;
@@ -80,7 +105,7 @@ body {
   font-size: 16px;
   border-radius: 7px;
   margin-bottom: 20px;
-  width: 90%;
+  width: 75%;
   position: relative;
 }
 .chat .chat-history .message:after {
@@ -108,32 +133,52 @@ body {
 }
 .chat .chat-message {
   padding: 20px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
-.chat .chat-message textarea {
-  width: 80%;
+.chat .chat-message input {
+  width: 85%;
   border: none;
   padding: 10px 20px;
-  font: 14px/22px "Lato", Arial, sans-serif;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  resize: none;
+  font-size: 14px;
 }
-.chat .chat-message textarea:focus {
-  outline-color: rgba(237, 35, 53, 1); 
+.chat .chat-message input:focus {
+  outline: none;
 }
-.chat .chat-message button {
+.chat .chat-message i {
   float: right;
-  color: #ED2335;
+  color: #F2F5F8;
+  background-color: #ED2335;
   font-size: 16px;
-  text-transform: uppercase;
   border: none;
   cursor: pointer;
-  font-weight: bold;
-  background: #F2F5F8;
-  padding: 10px;
+  padding: 14px;
+  border-radius: 100%;
 }
 button:focus {
   outline: none;
+}
+.logout {
+  position: fixed;
+  bottom: 3vh;
+  right: 3vw;
+  color: #F2F5F8;
+  background-color: #ED2335;
+  font-size: 20px;
+  border-radius: 100%;
+  padding: 17px 20px;
+  -webkit-box-shadow: 0px 0px 20px 2px #aaa;
+  -moz-box-shadow: 0px 0px 20px 2px #aaa;
+  box-shadow: 0px 0px 20px 2px #aaa;
+  cursor: pointer;
+}
+.logout:hover {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  transition: all .3s ease-in;
 }
 .align-left {
   text-align: left;
@@ -143,14 +188,6 @@ button:focus {
 }
 .float-right {
   float: right;
-}
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
 }
 ul {
   list-style-type: none !important;
