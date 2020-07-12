@@ -3,8 +3,8 @@
     <head>
         <title>WebChat</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/fontello.css">
         <link rel="stylesheet" type="text/css" href="css/chat.css">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -22,12 +22,12 @@
                 </div>
                 <div class="chat-message">
                     <input name="toSend" id="toSend" placeholder="Type your message">
-                    <i id="send" onclick="sendMessage()" class="fa fa-paper-plane"></i>
+                    <i id="send" onclick="sendMessage()" class="icon-paper-plane"></i>
                 </div>
             </div>
         </div>
         <div class="logout" id="logout" onclick="disconnect()">
-            <i class="fa fa-power-off"></i>
+            <i class="icon-off"></i>
         </div>
         <script type="text/javascript" src="js/chat.js"></script>
     </body>

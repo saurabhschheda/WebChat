@@ -168,7 +168,7 @@ button:focus {
   background-color: #ED2335;
   font-size: 20px;
   border-radius: 100%;
-  padding: 17px 20px;
+  padding: 17px 17px;
   -webkit-box-shadow: 0px 0px 20px 2px #aaa;
   -moz-box-shadow: 0px 0px 20px 2px #aaa;
   box-shadow: 0px 0px 20px 2px #aaa;

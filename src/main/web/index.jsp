@@ -5,8 +5,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>WebChat</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/fontello.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
@@ -46,7 +46,7 @@
   <!-- Register Card -->
   <div class="card alt">
 
-    <div class="toggle"></div>
+    <div class="toggle demo-icon icon-pencil"></div>
 
     <h1 class="title">Register
       <div class="close"></div>
