@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/fontello.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -46,10 +45,10 @@
   <!-- Register Card -->
   <div class="card alt">
 
-    <div class="toggle demo-icon icon-pencil"></div>
+    <div class="toggle demo-icon icon-pencil" onclick="toggleActiveClass()"></div>
 
     <h1 class="title">Register
-      <div class="close"></div>
+      <div class="close" onclick="toggleActiveClass()"></div>
     </h1>
 
     <form action="RegisterServlet" method="POST">

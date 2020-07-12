@@ -1,9 +1,13 @@
+const containerClassList = document.getElementsByClassName('container')[0].classList;
+let isActive = false;
 
-
-$('.toggle').on('click', function() {
-  $('.container').stop().addClass('active');
-});
-
-$('.close').on('click', function() {
-  $('.container').stop().removeClass('active');
-});
+function toggleActiveClass() {
+  if (isActive) {
+    containerClassList.remove('active');
+    isActive = false;
+  }
+  else {
+    isActive = true;
+    containerClassList.add('active');
+  }
+}
