@@ -32,4 +32,4 @@ build/
 out/
 
 # dbProperties
-# src/main/resources/db.properties
+src/main/resources/db.properties
