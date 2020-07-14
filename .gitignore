@@ -30,3 +30,6 @@ hs_err_pid*
 target/
 build/
 out/
+
+# dbProperties
+# src/main/resources/db.properties
