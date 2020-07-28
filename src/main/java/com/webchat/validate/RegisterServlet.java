@@ -9,8 +9,12 @@ import java.sql.SQLException;
 
 import com.webchat.model.Organization;
 import com.webchat.model.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RegisterServlet extends HttpServlet {
+
+    private static final Logger logger = LogManager.getLogger("RegisterServlet");
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ValidationException {
@@ -20,11 +24,13 @@ public class RegisterServlet extends HttpServlet {
         try {
             Authenticator authenticator = Authenticator.getInstance();
             if (!authenticator.isUsernamePresent(username)) {
+                logger.info("Username already exists");
                 throw new ValidationException("Username already Exists");
             }
             Organization organization = new Organization(orgName);
             User newUser = new User(username, password, organization);
             newUser.register();
+            logger.info("User " + username + " registered");
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
